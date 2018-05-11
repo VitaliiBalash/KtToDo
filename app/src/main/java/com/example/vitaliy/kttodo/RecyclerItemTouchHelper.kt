@@ -3,6 +3,7 @@ package com.example.vitaliy.kttodo
 import android.graphics.Canvas
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.View
 
 interface RecyclerItemTouchHelperListener {
     fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int)
@@ -39,6 +40,8 @@ class RecyclerItemTouchHelper(
             dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
     ) {
         if (viewHolder is InboxViewHolder) {
+            viewHolder.viewDoneBackground.visibility = if (dX>0) View.VISIBLE else View.INVISIBLE
+
             ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(
                     c, recyclerView, viewHolder.viewForeground, dX, dY, actionState, isCurrentlyActive
             )

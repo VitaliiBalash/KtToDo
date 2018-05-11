@@ -7,10 +7,12 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.example.vitaliy.kttodo.states.ToDosState
+import com.example.vitaliy.kttodo.actions.ToDoActionDelete
+import com.example.vitaliy.kttodo.actions.ToDoActionDone
+import com.example.vitaliy.kttodo.states.ToDoState
 import tw.geothings.rekotlin.StoreSubscriber
 
-class InboxActivity : AppCompatActivity(), StoreSubscriber<ToDosState>, RecyclerItemTouchHelperListener {
+class InboxActivity : AppCompatActivity(), StoreSubscriber<ToDoState>, RecyclerItemTouchHelperListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var listAdapter: InboxListAdapter
@@ -39,11 +41,15 @@ class InboxActivity : AppCompatActivity(), StoreSubscriber<ToDosState>, Recycler
         super.onDestroy()
     }
 
-    override fun newState(state: ToDosState) {
-        listAdapter.items = state.todoList
+    override fun newState(state: ToDoState) {
+        listAdapter.items = state.todoList.filter { !it.done }
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        println("swiped")
+        val id = viewHolder.itemId
+        when(direction){
+            ItemTouchHelper.LEFT -> mainStore.dispatch(ToDoActionDelete(id))
+            ItemTouchHelper.RIGHT -> mainStore.dispatch(ToDoActionDone(id))
+        }
     }
 }
