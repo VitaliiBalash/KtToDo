@@ -38,5 +38,5 @@ class InboxListAdapter(private val context: Context) : RecyclerView.Adapter<Inbo
 
     override fun getItemCount(): Int = items.count()
 
-    override fun getItemId(position: Int): Long = items[position].uuid.mostSignificantBits
+    override fun getItemId(position: Int): Long = items[position].id
 }

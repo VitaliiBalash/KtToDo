@@ -3,6 +3,7 @@
 
     <dimen name="listRow_paddingStart">16dp</dimen>
     <dimen name="listRow_paddingEnd">16dp</dimen>
-    <dimen name="listRow_paddingTop">12dp</dimen>
-    <dimen name="listRow_paddingBottom">12dp</dimen>
+    <dimen name="listRow_paddingTop">16dp</dimen>
+    <dimen name="listRow_paddingBottom">16dp</dimen>
+    <dimen name="listRow_swipeIconMargin">12dp</dimen>
 </resources>
