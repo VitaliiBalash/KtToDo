@@ -10,8 +10,8 @@ fun todoReducer(action: Action, oldState: ToDoState): ToDoState {
                 todoList = oldState.todoList.filter { it.id != action.id }
         )
 
-        is ToDoActionDone -> oldState.copy(
-                todoList = oldState.todoList.map { if (it.id == action.id) it.copy(done = true) else it }
+        is ToDoActionComplete -> oldState.copy(
+                todoList = oldState.todoList.map { if (it.id == action.id) it.copy(completed = true) else it }
         )
 
         else -> oldState

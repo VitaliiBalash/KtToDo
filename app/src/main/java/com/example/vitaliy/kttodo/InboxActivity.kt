@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.example.vitaliy.kttodo.actions.ToDoActionDelete
-import com.example.vitaliy.kttodo.actions.ToDoActionDone
+import com.example.vitaliy.kttodo.actions.ToDoActionComplete
 import com.example.vitaliy.kttodo.states.ToDoState
 import tw.geothings.rekotlin.StoreSubscriber
 
@@ -42,14 +42,14 @@ class InboxActivity : AppCompatActivity(), StoreSubscriber<ToDoState>, RecyclerI
     }
 
     override fun newState(state: ToDoState) {
-        listAdapter.items = state.todoList.filter { !it.done }
+        listAdapter.items = state.todoList.filter { !it.completed }
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val id = viewHolder.itemId
         when(direction){
             ItemTouchHelper.LEFT -> mainStore.dispatch(ToDoActionDelete(id))
-            ItemTouchHelper.RIGHT -> mainStore.dispatch(ToDoActionDone(id))
+            ItemTouchHelper.RIGHT -> mainStore.dispatch(ToDoActionComplete(id))
         }
     }
 }

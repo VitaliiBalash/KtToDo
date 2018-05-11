@@ -4,4 +4,4 @@ import tw.geothings.rekotlin.Action
 
 data class ToDoActionDelete(val id: Long) : Action
 
-data class ToDoActionDone(val id: Long) : Action
+data class ToDoActionComplete(val id: Long) : Action

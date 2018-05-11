@@ -9,5 +9,5 @@ data class ToDoState(
 data class ToDo(
         val id: Long = System.currentTimeMillis(),
         val todo: String = "ToDo",
-        val done: Boolean = false
+        val completed: Boolean = false
 )
