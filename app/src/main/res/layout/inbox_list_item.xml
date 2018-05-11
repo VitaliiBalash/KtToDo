@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/view_delete_background"
+        android:id="@+id/view_deleteBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/rowDeleteBackground">
@@ -13,7 +13,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/view_done_background"
+        android:id="@+id/view_doneBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/rowDoneBackground">
@@ -24,11 +24,16 @@
         android:id="@+id/view_foreground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rowBackground">
+        android:background="@color/rowBackground"
+        android:paddingStart="@dimen/listRow_paddingStart"
+        android:paddingEnd="@dimen/listRow_paddingEnd"
+        android:paddingTop="@dimen/listRow_paddingTop"
+        android:paddingBottom="@dimen/listRow_paddingBottom">
 
         <TextView
+            android:id="@+id/textView_todo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hi"/>
+            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
     </RelativeLayout>
 </FrameLayout>

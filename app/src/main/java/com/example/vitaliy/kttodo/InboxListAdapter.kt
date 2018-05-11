@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.example.vitaliy.kttodo.states.ToDo
 
 class InboxViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val viewDeleteBackground: RelativeLayout = view.findViewById(R.id.view_delete_background)
-    val viewDoneBackground: RelativeLayout = view.findViewById(R.id.view_done_background)
+    val viewDeleteBackground: RelativeLayout = view.findViewById(R.id.view_deleteBackground)
+    val viewDoneBackground: RelativeLayout = view.findViewById(R.id.view_doneBackground)
     val viewForeground: RelativeLayout = view.findViewById(R.id.view_foreground)
+    val textToDo: TextView = view.findViewById(R.id.textView_todo)
 }
 
 class InboxListAdapter(private val context: Context) : RecyclerView.Adapter<InboxViewHolder>() {
@@ -31,7 +33,7 @@ class InboxListAdapter(private val context: Context) : RecyclerView.Adapter<Inbo
     }
 
     override fun onBindViewHolder(holder: InboxViewHolder, position: Int) {
-        println("Bind")
+        holder.textToDo.text = items[position].todo
     }
 
     override fun getItemCount(): Int = items.count()

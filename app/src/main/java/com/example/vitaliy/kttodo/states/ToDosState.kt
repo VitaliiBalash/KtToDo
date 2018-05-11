@@ -9,5 +9,5 @@ data class ToDosState(
 
 data class ToDo(
         val uuid: UUID,
-        val task: String
+        val todo: String
 )
