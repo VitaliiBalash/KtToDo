@@ -15,10 +15,10 @@ import com.example.vitaliy.kttodo.actions.ToDoActionDelete
 import com.example.vitaliy.kttodo.states.ToDoState
 import tw.geothings.rekotlin.StoreSubscriber
 
-/**
- * A placeholder fragment containing a simple view.
- */
 class InboxFragment : Fragment(), StoreSubscriber<ToDoState>, RecyclerItemTouchHelperListener {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var listAdapter: InboxListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,9 +41,6 @@ class InboxFragment : Fragment(), StoreSubscriber<ToDoState>, RecyclerItemTouchH
         return view
     }
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var listAdapter: InboxListAdapter
-
     override fun onDestroyView() {
         mainStore.unsubscribe(this)
         super.onDestroyView()
@@ -55,7 +52,7 @@ class InboxFragment : Fragment(), StoreSubscriber<ToDoState>, RecyclerItemTouchH
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val id = viewHolder.itemId
-        when(direction){
+        when (direction) {
             ItemTouchHelper.LEFT -> mainStore.dispatch(ToDoActionDelete(id))
             ItemTouchHelper.RIGHT -> mainStore.dispatch(ToDoActionComplete(id))
         }
