@@ -24,8 +24,8 @@ class RecyclerItemTouchHelper(
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        if (viewHolder is InboxViewHolder) {
-            ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(viewHolder.viewForeground)
+        if (viewHolder is ViewHolderInterface) {
+            ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(viewHolder.getForeground())
         }
     }
 
@@ -39,19 +39,19 @@ class RecyclerItemTouchHelper(
             c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?,
             dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
     ) {
-        if (viewHolder is InboxViewHolder) {
-            viewHolder.viewDoneBackground.visibility = if (dX>0) View.VISIBLE else View.INVISIBLE
+        if (viewHolder is ViewHolderInterface) {
+            viewHolder.getLeftBackground()?.visibility = if (dX > 0) View.VISIBLE else View.INVISIBLE
 
             ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(
-                    c, recyclerView, viewHolder.viewForeground, dX, dY, actionState, isCurrentlyActive
+                    c, recyclerView, viewHolder.getForeground(), dX, dY, actionState, isCurrentlyActive
             )
         }
     }
 
     override fun onChildDrawOver(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-        if (viewHolder is InboxViewHolder) {
+        if (viewHolder is ViewHolderInterface) {
             ItemTouchHelper.Callback.getDefaultUIUtil().onDrawOver(
-                    c, recyclerView, viewHolder.viewForeground, dX, dY, actionState, isCurrentlyActive
+                    c, recyclerView, viewHolder.getForeground(), dX, dY, actionState, isCurrentlyActive
             )
         }
     }

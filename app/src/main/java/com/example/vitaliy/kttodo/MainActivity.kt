@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun loadFragment() {
-        val fragment = when (currentFragment) {
+        val fragment: Fragment = when (currentFragment) {
             Fragments.INBOX -> InboxFragment()
             Fragments.COMPLETED -> CompletedFragment()
         }
