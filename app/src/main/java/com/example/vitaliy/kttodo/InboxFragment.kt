@@ -1,44 +1,52 @@
 package com.example.vitaliy.kttodo
 
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.example.vitaliy.kttodo.actions.ToDoActionDelete
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.example.vitaliy.kttodo.actions.ToDoActionComplete
+import com.example.vitaliy.kttodo.actions.ToDoActionDelete
 import com.example.vitaliy.kttodo.states.ToDoState
 import tw.geothings.rekotlin.StoreSubscriber
 
-class InboxActivity : AppCompatActivity(), StoreSubscriber<ToDoState>, RecyclerItemTouchHelperListener {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+class InboxFragment : Fragment(), StoreSubscriber<ToDoState>, RecyclerItemTouchHelperListener {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var listAdapter: InboxListAdapter
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_inbox, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inbox)
+        listAdapter = InboxListAdapter()
 
-        listAdapter = InboxListAdapter(this)
-
-        val layoutManager = LinearLayoutManager(applicationContext)
-        recyclerView = findViewById(R.id.recycler_view)
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = listAdapter
 
         val recyclerItemTouchHelper = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
         ItemTouchHelper(recyclerItemTouchHelper).attachToRecyclerView(recyclerView)
 
         mainStore.subscribe(this) { it.select { it.todoState } }
+
+        return view
     }
 
-    override fun onDestroy() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var listAdapter: InboxListAdapter
+
+    override fun onDestroyView() {
         mainStore.unsubscribe(this)
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun newState(state: ToDoState) {

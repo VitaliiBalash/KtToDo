@@ -1,6 +1,5 @@
 package com.example.vitaliy.kttodo
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,7 @@ class InboxViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val textToDo: TextView = view.findViewById(R.id.textView_todo)
 }
 
-class InboxListAdapter(private val context: Context) : RecyclerView.Adapter<InboxViewHolder>() {
+class InboxListAdapter : RecyclerView.Adapter<InboxViewHolder>() {
     var items: List<ToDo> = listOf()
         set(value) {
             field = value
