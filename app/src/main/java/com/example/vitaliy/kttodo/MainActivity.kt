@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         INBOX, COMPLETED
     }
 
-    var currentFragment = Fragments.INBOX
+    private var currentFragment = Fragments.INBOX
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +60,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> currentFragment
         }
 
-        if (newFragment!=currentFragment){
-            currentFragment=newFragment
+        if (newFragment != currentFragment) {
+            currentFragment = newFragment
             loadFragment()
         }
 
-        Handler().postDelayed({drawer_layout.closeDrawer(GravityCompat.START)}, 100)
+        Handler().postDelayed({ drawer_layout.closeDrawer(GravityCompat.START) }, 100)
 
         return true
     }
@@ -84,17 +84,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Fragments.COMPLETED -> CompletedFragment()
         }
 
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame, fragment)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frame, fragment)
+                .commit()
 
-        fragmentTransaction.commit()
         updateTitle()
     }
 
-    private fun updateTitle(){
-        title = when(currentFragment){
-            Fragments.INBOX->getString(R.string.title_inbox)
-            Fragments.COMPLETED->getString(R.string.title_completed)
+    private fun updateTitle() {
+        title = when (currentFragment) {
+            Fragments.INBOX -> getString(R.string.title_inbox)
+            Fragments.COMPLETED -> getString(R.string.title_completed)
         }
     }
 }
