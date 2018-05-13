@@ -8,18 +8,17 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.vitaliy.kttodo.states.ToDo
 
-class InboxViewHolder(view: View) : RecyclerView.ViewHolder(view), ViewHolderInterface {
+class CompletedViewHolder(view: View) : RecyclerView.ViewHolder(view), ViewHolderInterface {
     val viewDeleteBackground: RelativeLayout = view.findViewById(R.id.view_deleteBackground)
-    val viewDoneBackground: RelativeLayout = view.findViewById(R.id.view_doneBackground)
     val viewForeground: RelativeLayout = view.findViewById(R.id.view_foreground)
     val textToDo: TextView = view.findViewById(R.id.textView_todo)
 
     override fun getForeground() = viewForeground
-    override fun getLeftBackground() = viewDoneBackground
+    override fun getLeftBackground() = null
     override fun getRightBackground() = viewDeleteBackground
 }
 
-class InboxListAdapter : RecyclerView.Adapter<InboxViewHolder>() {
+class CompletedListAdapter : RecyclerView.Adapter<CompletedViewHolder>() {
     var items: List<ToDo> = listOf()
         set(value) {
             field = value
@@ -30,12 +29,12 @@ class InboxListAdapter : RecyclerView.Adapter<InboxViewHolder>() {
         super.setHasStableIds(true)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.inbox_list_item, parent, false)
-        return InboxViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompletedViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.completed_list_item, parent, false)
+        return CompletedViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: InboxViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CompletedViewHolder, position: Int) {
         holder.textToDo.text = items[position].todo
     }
 

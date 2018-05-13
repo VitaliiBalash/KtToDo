@@ -1,18 +1,59 @@
 package com.example.vitaliy.kttodo
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.vitaliy.kttodo.actions.ToDoActionDelete
+import com.example.vitaliy.kttodo.states.ToDoState
+import tw.geothings.rekotlin.StoreSubscriber
 
-class CompletedFragment : Fragment() {
+class CompletedFragment : Fragment(), StoreSubscriber<ToDoState>, RecyclerItemTouchHelperListener {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var listAdapter: CompletedListAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_completed, container, false)
+        val view = inflater.inflate(R.layout.fragment_completed, container, false)
+
+        listAdapter = CompletedListAdapter()
+
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        recyclerView.adapter = listAdapter
+
+        val recyclerItemTouchHelper = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
+        ItemTouchHelper(recyclerItemTouchHelper).attachToRecyclerView(recyclerView)
+
+        mainStore.subscribe(this) { it.select { it.todoState } }
+
+        return view
+    }
+
+    override fun onDestroyView() {
+        mainStore.unsubscribe(this)
+        super.onDestroyView()
+    }
+
+    override fun newState(state: ToDoState) {
+        listAdapter.items = state.todoList.filter { it.completed }
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        val id = viewHolder.itemId
+        when (direction) {
+            ItemTouchHelper.LEFT -> mainStore.dispatch(ToDoActionDelete(id))
+        }
     }
 
 }
