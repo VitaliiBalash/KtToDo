@@ -3,17 +3,13 @@ package com.example.vitaliy.kttodo
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
 import kotlinx.android.synthetic.main.activity_main.*
-import android.support.v4.view.MenuItemCompat.getActionView
 import android.widget.TextView
 import com.example.vitaliy.kttodo.states.ToDoState
 import tw.geothings.rekotlin.StoreSubscriber
@@ -50,8 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun newState(state: ToDoState) {
-       inboxCounterTextView.text = state.todoList.count { !it.completed }.toString()
-       completedCounterTextView.text = state.todoList.count { it.completed }.toString()
+        inboxCounterTextView.text = state.todoList.count { !it.completed }.toString()
+        completedCounterTextView.text = state.todoList.count { it.completed }.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
