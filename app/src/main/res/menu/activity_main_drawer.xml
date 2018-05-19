@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_inbox"
-            android:icon="@drawable/ic_inbox_grey_24dp"
             android:checked="true"
-            android:title="Inbox"
-            app:actionLayout="@layout/menu_counter"/>
+            android:icon="@drawable/ic_inbox_grey_24dp"
+            android:title="@string/title_inbox"
+            app:actionLayout="@layout/menu_counter" />
         <item
             android:id="@+id/nav_completed"
             android:icon="@drawable/ic_done_grey_24dp"
-            android:title="Completed"
-            app:actionLayout="@layout/menu_counter"/>
+            android:title="@string/title_completed"
+            app:actionLayout="@layout/menu_counter" />
     </group>
 
 </menu>
