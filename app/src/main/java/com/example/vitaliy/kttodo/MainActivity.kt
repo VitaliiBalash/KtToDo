@@ -13,14 +13,24 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.widget.TextView
+import com.example.vitaliy.kttodo.states.ToDoState
+import tw.geothings.rekotlin.StoreSubscriber
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, StoreSubscriber<ToDoState> {
 
     enum class Fragments {
         INBOX, COMPLETED
     }
 
     private var currentFragment = Fragments.INBOX
+
+    private val inboxCounterTextView: TextView
+            by lazy { nav_view.menu.findItem(R.id.nav_inbox).actionView as TextView }
+    private val completedCounterTextView: TextView
+            by lazy { nav_view.menu.findItem(R.id.nav_completed).actionView as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +45,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         loadFragment()
+
+        mainStore.subscribe(this) { it.select { it.todoState } }
+    }
+
+    override fun newState(state: ToDoState) {
+       inboxCounterTextView.text = state.todoList.count { !it.completed }.toString()
+       completedCounterTextView.text = state.todoList.count { it.completed }.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
