@@ -12,14 +12,13 @@ fun todoReducer(action: Action, oldState: ToDoState): ToDoState {
         )
 
         is ToDoActionComplete -> oldState.copy(
-                todoList = oldState.todoList.map { if (it.id == action.id) it.copy(completed = true) else it }
+                todoList = oldState.todoList.map {
+                    if (it.id == action.id) it.copy(completed = true) else it
+                }
         )
 
         is ToDoActionCreate -> oldState.copy(
-                todoList = oldState.todoList + ToDo(
-                        id = System.currentTimeMillis(),
-                        todo = action.task
-                )
+                todoList = oldState.todoList + ToDo(todo = action.task)
         )
 
         else -> oldState
