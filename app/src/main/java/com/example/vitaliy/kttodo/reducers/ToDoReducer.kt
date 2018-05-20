@@ -18,8 +18,10 @@ fun todoReducer(action: Action, oldState: ToDoState): ToDoState {
         )
 
         is ToDoActionCreate -> oldState.copy(
-                todoList = oldState.todoList + ToDo(todo = action.task)
+                todoList = oldState.todoList + action.todo
         )
+
+        is ToDoActionReplace -> oldState.copy(todoList = action.todos)
 
         else -> oldState
     }

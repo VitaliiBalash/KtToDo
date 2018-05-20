@@ -2,18 +2,20 @@ package com.example.vitaliy.kttodo.db
 
 import android.arch.persistence.room.*
 
-
 @Entity(tableName = "todo")
 data class ToDo(
         @PrimaryKey
-        var id: Long?,
+        var id: Long,
 
         @ColumnInfo(name = "todo")
         var todo: String,
 
         @ColumnInfo(name = "completed")
         var completed: Boolean
-)
+) {
+    @Ignore
+    constructor(id: Long) : this(id, "", false)
+}
 
 @Dao
 interface ToDoDao {

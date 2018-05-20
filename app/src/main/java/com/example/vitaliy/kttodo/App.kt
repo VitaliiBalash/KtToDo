@@ -14,6 +14,12 @@ val mainStore = Store(
 )
 
 class App : Application() {
+
+    companion object {
+        lateinit var instance: App
+            private set
+    }
+
     override fun onCreate() {
         super.onCreate()
         if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -22,6 +28,8 @@ class App : Application() {
             return
         }
         LeakCanary.install(this)
+
+        instance = this
 
         mainStore.dispatch(SyncActionLoad())
     }
