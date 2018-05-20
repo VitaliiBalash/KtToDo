@@ -1,5 +1,6 @@
 package com.example.vitaliy.kttodo
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
@@ -43,6 +44,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         loadFragment()
 
         mainStore.subscribe(this) { it.select { it.todoState } }
+
+        fab.setOnClickListener {
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainStore.unsubscribe(this)
     }
 
     override fun newState(state: ToDoState) {
